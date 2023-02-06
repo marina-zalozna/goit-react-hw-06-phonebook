@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { addContact } from '../redux/contactsSlice';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import css from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
 
@@ -12,38 +12,45 @@ export default function ContactForm() {
   const numberInputId = nanoid();
 
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.items);
 
-  const formSubmit = data => {
-    dispatch(addContact(data));
-};
-const handleSubmit = evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
     const data = {
-        id: nanoid(),
-        name,
-        number
+      id: nanoid(),
+      name,
+      number,
+    };
+    const newName = contacts.find(
+      el => el.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (newName) {
+      alert(`${name} is already is in contacts.`);
+      return;
     }
-    formSubmit(data);
+    dispatch(addContact(data));
     resetForm();
-}
+  };
+
   const handleChange = evt => {
     switch (evt.currentTarget.name) {
-        case "name":
-            setName(evt.currentTarget.value);
-            break;
-        
-        case "number":
-            setNumber(evt.currentTarget.value);
-            break;
-        
-        default:
-            return;
+      case 'name':
+        setName(evt.currentTarget.value);
+        break;
+
+      case 'number':
+        setNumber(evt.currentTarget.value);
+        break;
+
+      default:
+        return;
     }
-}
-const resetForm = () => {
+  };
+  const resetForm = () => {
     setName('');
     setNumber('');
-}
+  };
   return (
     <form className={css.container} onSubmit={handleSubmit}>
       <label>

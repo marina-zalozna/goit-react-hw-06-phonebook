@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function Filter() {
 
-    const filter = useSelector(state => state.contactsReducer.filter);
+    const filter = useSelector(state => state.contacts.filter);
     const dispatch = useDispatch(); 
 
     const changeFilter = data => {

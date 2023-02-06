@@ -3,7 +3,7 @@ import { deleteContact } from '../redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function ContactList () {
-   const contacts = useSelector(state => state.contactsReducer.items.filter(contact => contact.name.toLowerCase().includes(state.contactsReducer.filter)));
+   const contacts = useSelector(state => state.contacts.items.filter(contact => contact.name.toLowerCase().includes(state.contacts.filter)));
     const dispatch = useDispatch();
 
     const deleteContacts = data => {
@@ -28,4 +28,3 @@ export default function ContactList () {
     </ul>
   );
 };
-
